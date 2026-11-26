@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MJSCalc — Try it in your browser</title>
+<meta name="description" content="Try MJSCalc in your browser: calculator, graphing, loans and unit conversion. Free for Mac, Windows and Linux.">
+<meta name="theme-color" content="#17181c" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f4f5f8" media="(prefers-color-scheme: light)">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="MJSCalc">
+<link rel="icon" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="loading" class="loading">
+  <img src="icon.png" alt="" width="72" height="72">
+  <h1>MJSCalc</h1>
+  <p id="loading-text">Loading the calculator…</p>
+  <div class="loading-bar"><div id="loading-fill"></div></div>
+  <p class="hint">The first visit downloads about 10 MB; after that it opens quickly.</p>
+</div>
+
+<header class="demo-bar">
+  <span><b>You’re trying MJSCalc in your browser</b> — 4 of its 16 pages.</span>
+  <a class="btn primary small" href="https://mjsapps.net/mjscalc/" target="_top">Get the free app</a>
+</header>
+
+<div class="app">
+  <nav class="sidebar" id="nav">
+    <div class="brand">MJSCalc <span class="tag">Browser demo</span></div>
+    <button data-page="calculator" class="nav-item active">🧮 <span>Calculator</span></button>
+    <button data-page="graph" class="nav-item">📉 <span>Graph</span></button>
+    <button data-page="loan" class="nav-item">🏠 <span>Loans &amp; Home</span></button>
+    <button data-page="converter" class="nav-item">📏 <span>Converter</span></button>
+    <div class="nav-head">In the full app</div>
+    <div id="locked"></div>
+  </nav>
+
+  <main>
+    <!-- ======================= Calculator ======================= -->
+    <section id="page-calculator" class="page active">
+      <div class="calc">
+        <div class="calc-main">
+          <div class="toolbar">
+            <button id="sci-toggle" class="btn toggle on" title="Show or hide the scientific keys">Scientific</button>
+            <div class="seg" id="angle"><button data-v="deg" class="on">DEG</button><button data-v="rad">RAD</button></div>
+            <div class="seg" id="fmt" title="Normal: 1,234.5 · Scientific: 1.2345e3 · Engineering: exponents in steps of 3"><button data-v="auto" class="on">Normal</button><button data-v="sci">Sci</button><button data-v="eng">Eng</button></div>
+            <span class="grow"></span>
+            <button id="hist-toggle" class="btn toggle on">History</button>
+          </div>
+          <div class="display">
+            <div id="prev-expr" class="prev-expr"></div>
+            <input id="expr" class="expr" autocomplete="off" autocapitalize="off" spellcheck="false"
+                   placeholder="Type or tap — e.g. 12% of 250, 2π·4, sin(30)">
+            <div id="preview" class="preview">0</div>
+          </div>
+          <div class="pads">
+            <div class="pad sci" id="sci-pad"></div>
+            <div class="pad basic" id="basic-pad"></div>
+          </div>
+        </div>
+        <aside class="card history" id="history-card">
+          <div class="card-head"><h2>History</h2><button class="link" id="hist-clear">Clear</button></div>
+          <p class="hint">Tap to reuse a result · double-tap to edit</p>
+          <ul id="history" class="list"></ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ======================= Graph ======================= -->
+    <section id="page-graph" class="page">
+      <div class="graph">
+        <div class="graph-side">
+          <div class="card">
+            <h2>Functions</h2>
+            <p class="hint">Type in terms of x. Tap a colored dot to hide a graph.</p>
+            <div id="fn-rows"></div>
+            <button class="btn" id="fn-add">+ Add function</button>
+          </div>
+          <div class="card" id="param-card" hidden>
+            <h2>Parameters</h2>
+            <p class="hint">Letters like a, b, c in your functions get a slider.</p>
+            <div id="param-rows"></div>
+          </div>
+          <div class="card">
+            <h2>Key points</h2>
+            <label class="check"><input type="checkbox" id="show-points" checked> Show roots, peaks and crossings</label>
+            <label class="check"><input type="checkbox" id="show-tangent"> Tangent line and slope while tracing</label>
+            <ul id="points" class="list points"></ul>
+            <p class="hint">In the visible area. Tap one to centre on it.</p>
+          </div>
+        </div>
+        <div class="graph-main">
+          <div class="toolbar">
+            <div class="seg" id="g-angle"><button data-v="rad" class="on">RAD</button><button data-v="deg">DEG</button></div>
+            <div class="seg" id="g-mode"><button data-v="graph" class="on">Graph</button><button data-v="table">Table</button></div>
+            <span class="grow"></span>
+            <label class="step" id="step-wrap" hidden>Step <input id="g-step" value="1" inputmode="decimal"></label>
+            <button class="btn" id="g-out" title="Zoom out">−</button>
+            <button class="btn" id="g-in" title="Zoom in">+</button>
+            <button class="btn" id="g-fit" title="Fit the curves vertically">Fit</button>
+            <button class="btn" id="g-reset" title="Back to −10 … 10">Reset</button>
+          </div>
+          <div class="card graph-frame">
+            <canvas id="canvas"></canvas>
+            <div id="g-table" class="table-wrap" hidden></div>
+          </div>
+          <p class="hint">Drag to move · scroll or pinch to zoom · hover or touch to trace</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= Loan ======================= -->
+    <section id="page-loan" class="page">
+      <div class="page-head">
+        <h1>Loans &amp; Home</h1>
+        <p class="muted">Loan payments with a full amortization schedule. The full app adds the monthly cost of a home, what you can afford, rent vs buy, car lease vs buy, refinancing and a debt payoff plan.</p>
+      </div>
+      <div class="loan">
+        <div class="card loan-form">
+          <h2>Loan details</h2>
+          <div class="seg wide" id="l-mode"><button data-v="pay" class="on">Find my payment</button><button data-v="borrow">What can I borrow?</button></div>
+          <div class="form">
+            <label>Quick start</label>
+            <select id="l-preset">
+              <option>Custom</option><option selected>30-year mortgage</option><option>15-year mortgage</option>
+              <option>Auto loan (5 yr)</option><option>Student loan (10 yr)</option><option>Personal loan (3 yr)</option>
+            </select>
+            <label id="l-amount-label">Loan amount</label>
+            <input id="l-amount" class="num money" inputmode="decimal" value="350,000.00">
+            <label id="l-budget-label" hidden>Payment I can afford</label>
+            <input id="l-budget" class="num money" inputmode="decimal" value="2,000.00" hidden>
+            <label>Interest rate (yearly)</label>
+            <div class="suffix"><input id="l-rate" class="num" inputmode="decimal" value="6.5"><span>%</span></div>
+            <label>Term</label>
+            <div class="row"><input id="l-term" class="num" inputmode="numeric" value="30"><select id="l-term-unit"><option>years</option><option>months</option></select></div>
+            <label>Payments</label>
+            <select id="l-freq">
+              <option value="12">Monthly</option><option value="26">Bi-weekly</option><option value="52">Weekly</option>
+              <option value="24">Semi-monthly</option><option value="4">Quarterly</option><option value="1">Annually</option>
+            </select>
+            <label title="Added to every payment — goes straight to principal">Extra per payment</label>
+            <input id="l-extra" class="num money" inputmode="decimal" value="0.00">
+            <label title="Subtracted from the price to give the loan amount">Down payment</label>
+            <input id="l-down" class="num money" inputmode="decimal" value="0.00">
+            <label>First payment</label>
+            <input id="l-start" type="date">
+          </div>
+          <p class="hint">Results update as you type.</p>
+        </div>
+        <div class="loan-results">
+          <div class="card">
+            <div class="stats">
+              <div class="stat big"><div class="stat-label" id="s-payment-label">Monthly payment</div><div class="stat-value" id="s-payment">—</div></div>
+              <div class="stat"><div class="stat-label">Total interest</div><div class="stat-value" id="s-interest">—</div></div>
+              <div class="stat"><div class="stat-label">Total of all payments</div><div class="stat-value" id="s-total">—</div></div>
+              <div class="stat"><div class="stat-label" id="s-principal-label">Loan amount</div><div class="stat-value" id="s-principal">—</div></div>
+              <div class="stat"><div class="stat-label">Payoff date</div><div class="stat-value" id="s-payoff">—</div></div>
+              <div class="stat"><div class="stat-label">Number of payments</div><div class="stat-value" id="s-count">—</div></div>
+            </div>
+            <div class="pbar"><div id="pbar-principal"></div><div id="pbar-interest"></div></div>
+            <div class="legend"><span><i class="sw accent"></i>Principal</span><span><i class="sw interest"></i>Interest</span></div>
+            <p class="good" id="l-saved"></p>
+            <p class="error" id="l-error"></p>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <h2>Amortization schedule</h2>
+              <span class="grow"></span>
+              <div class="seg" id="l-view"><button data-v="year" class="on">By year</button><button data-v="every">Every payment</button></div>
+              <button class="btn" id="l-csv">Export CSV</button>
+            </div>
+            <div id="l-table" class="table-wrap tall"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= Converter ======================= -->
+    <section id="page-converter" class="page">
+      <div class="page-head">
+        <h1>Converter</h1>
+        <p class="muted">Engineering and everyday units. You can type math in the value box, like 6*12 or 1/8.</p>
+      </div>
+      <div class="conv">
+        <div class="cats" id="cats"></div>
+        <select id="cats-select" class="cats-select"></select>
+        <div class="conv-main" id="conv-units">
+          <div class="card">
+            <div class="conv-grid">
+              <label class="stat-label">From</label><span></span>
+              <input id="c-from" class="big-input" value="1" inputmode="decimal"><select id="c-from-unit"></select>
+              <button class="btn" id="c-swap">⇅ Swap</button><span></span>
+              <label class="stat-label">To</label><span></span>
+              <input id="c-to" class="big-input" inputmode="decimal"><select id="c-to-unit"></select>
+            </div>
+            <p class="hint" id="c-formula"></p>
+          </div>
+          <div class="card"><h2>All units</h2><div id="c-all" class="table-wrap"></div></div>
+        </div>
+        <div class="conv-main" id="conv-bases" hidden>
+          <div class="card">
+            <h2>Number base converter</h2>
+            <p class="hint">Type in any box — the others update. Whole numbers only.</p>
+            <div class="form bases" id="bases"></div>
+            <p class="hint" id="base-info"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= Locked page ======================= -->
+    <section id="page-locked" class="page">
+      <div class="locked card">
+        <div class="locked-icon" id="locked-icon"></div>
+        <h1 id="locked-title"></h1>
+        <p id="locked-text" class="muted"></p>
+        <a class="btn primary" href="https://mjsapps.net/mjscalc/" target="_top">Download MJSCalc — free</a>
+        <p class="hint">For Mac, Windows and Linux. Everything stays on your computer.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="popover" class="popover" hidden></div>
+<div id="tip" class="tip" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/pyodide/v314.0.7/full/pyodide.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

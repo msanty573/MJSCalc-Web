@@ -1,0 +1,54 @@
+MJSCalc License
+
+Copyright (c) 2026 Michael J. Santy. All rights reserved.
+Published as MJS Applications (https://mjsapps.net).
+
+MJSCalc is free to download and use. This license explains what you may and may
+not do with it.
+
+1. Use. You may install and use MJSCalc, free of charge, on any number of
+   computers you own or control, for personal, educational or business purposes.
+
+2. Restrictions. Except as this license allows or the law permits despite it,
+   you may not:
+   a. copy, redistribute, sell, rent, lend or sublicense MJSCalc or any part of
+      it, or make it available for others to download, other than by linking to
+      https://mjsapps.net/mjscalc/;
+   b. modify, translate, or create derivative works of MJSCalc;
+   c. reverse engineer, decompile or disassemble MJSCalc, except to the extent
+      a third-party component's license (see section 4) gives you that right;
+   d. remove or change any copyright, trademark or license notice.
+
+3. Ownership. MJSCalc is licensed, not sold. Michael J. Santy keeps all rights,
+   title and interest in MJSCalc, including its code, design, documentation and
+   name, except for the third-party components described in section 4.
+
+4. Third-party components. MJSCalc includes software from others, such as Qt
+   and Qt for Python (PySide6), Python, SymPy, mpmath and Pillow. Those
+   components are licensed under their own terms, not this license, and nothing
+   in this license limits your rights under them — including, for the Qt
+   libraries, your right under the GNU Lesser General Public License to replace
+   them with your own versions. Their notices and license texts are shown in
+   Help → About MJSCalc → Licenses.
+
+5. Updates. MJSCalc can check for and download updates. This license covers
+   those updates unless they come with a different license.
+
+6. No warranty. MJSCALC IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+   PARTICULAR PURPOSE AND NON-INFRINGEMENT. Results are calculated from standard
+   formulas and the information you enter; check important figures — financial,
+   tax, engineering, medical or otherwise — with a qualified professional before
+   relying on them.
+
+7. Limitation of liability. TO THE FULLEST EXTENT THE LAW ALLOWS, MICHAEL
+   J. SANTY IS NOT LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY ARISING
+   FROM OR CONNECTED WITH MJSCALC OR ITS USE.
+
+8. Ending this license. This license ends automatically if you break its terms.
+   You must then stop using MJSCalc and delete all copies.
+
+9. Earlier versions. MJSCalc versions up to and including 3.18.3 were released
+   under the MIT License; copies of those versions remain under that license.
+
+Questions: support@mjsapps.net
